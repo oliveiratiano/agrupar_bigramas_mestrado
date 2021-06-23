@@ -46,6 +46,13 @@ def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, 
             print('erro: o tesauro deverá ser baixado manualmente no mesmo diretório do arquivo grouper.py')
             traceback.print_exc()
             erro = True
+    if not os.path.exists('resultados'):
+        try:
+            os.mkdir('resultados')
+        except:
+            print('erro: não foi possivel criar o diretório de resultados; verifique as permissões e tente novamente')
+            traceback.print_exc()
+            erro = True       
     if not erro:
         documentos_validos = ler_documentos_validos()
         X_treino, X_teste, y_treino, y_teste = criar_holdout(documentos_validos, rnd)
@@ -57,7 +64,7 @@ def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, 
         opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
         opc_stopwords = '__removeu_sw_pt'
         exp = '__minfreq_' + str(freq_min) + opc_tesauro + opc_ica + opc_stopwords + '__hashing__seed-' + str(rnd)
-        dir_experimento = 'experimento_'+str(exp)
+        dir_experimento = 'resultados/experimento_'+str(exp)
 
         if not os.path.exists(dir_experimento):
             os.mkdir(dir_experimento)
@@ -102,7 +109,7 @@ def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, 
         y_kmeans = le.transform(y_kmeans)
         lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, lista_k)
         #gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
-        np.save(dir_experimento + '/' + 'hashing_lista_scores_k.npy', lista_scores_k)
+        np.save('resultados/' + dir_experimento + '/' + 'hashing_lista_scores_k.npy', lista_scores_k)
         print('******   dados de agrupamento do modelo hashing salvos.')
 
         #####MATRIZES DE SIMILARIDADE##############
@@ -178,7 +185,7 @@ def calcular_sim_assuntos(assuntos, sim_docs, dir_experimento):
     plt.cla()
 
 #retorna dataframe com duas colunas contendo, respectivamente, ids e assunto dos documento
-def ler_documentos_validos(quantidade=40009, min_freq_assunto = 50, min_palavras_documento = 50):    
+def ler_documentos_validos(quantidade=40009, min_freq_assunto = 50, min_palavras_documento = 50):
     df = pd.read_csv('dados/corpus_tratado/metadados.csv')[0:quantidade]
     documentos_validos = filtrar_assuntos(min_freq_assunto, df)
     documentos_validos = filtrar_documentos_curtos(min_palavras_documento, documentos_validos)
