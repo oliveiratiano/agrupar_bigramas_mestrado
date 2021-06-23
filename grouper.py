@@ -54,7 +54,7 @@ def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, 
             traceback.print_exc()
             erro = True       
     if not erro:
-        documentos_validos = ler_documentos_validos()
+        documentos_validos = ler_documentos_validos(quantidade=10000)
         X_treino, X_teste, y_treino, y_teste = criar_holdout(documentos_validos, rnd)
         stopwords = nltk.corpus.stopwords.words('portuguese')
         diretorio = "dados/corpus_tratado/"
