@@ -43,7 +43,7 @@ def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, 
         try:
             baixar_tesauro()
         except:
-            print('erro: o tesauro deverá ser baixado manualmente no mesmo diretório do arquivo tfidf.py')
+            print('erro: o tesauro deverá ser baixado manualmente no mesmo diretório do arquivo grouper.py')
             traceback.print_exc()
             erro = True
     if not erro:
@@ -56,7 +56,7 @@ def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, 
         opc_tesauro = '__com_crit_tesauro' if usar_tesauro  else '__sem_crit_tesauro'
         opc_ica = '__com_crit_ica' if usar_ica  else '__sem_crit_ica'
         opc_stopwords = '__removeu_sw_pt'
-        exp = '__minfreq_' + str(freq_min) + opc_tesauro + opc_ica + opc_stopwords + '__tfidf__seed-' + str(rnd)
+        exp = '__minfreq_' + str(freq_min) + opc_tesauro + opc_ica + opc_stopwords + '__hashing__seed-' + str(rnd)
         dir_experimento = 'experimento_'+str(exp)
 
         if not os.path.exists(dir_experimento):
@@ -102,8 +102,8 @@ def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, 
         y_kmeans = le.transform(y_kmeans)
         lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, lista_k)
         #gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
-        np.save(dir_experimento + '/' + 'tfidf_lista_scores_k.npy', lista_scores_k)
-        print('******   dados de agrupamento do modelo tfidf salvos.')
+        np.save(dir_experimento + '/' + 'hashing_lista_scores_k.npy', lista_scores_k)
+        print('******   dados de agrupamento do modelo hashing salvos.')
 
         #####MATRIZES DE SIMILARIDADE##############
         print('--------- executando analyzer para experimento '+ str(exp)+' ---------')
@@ -147,11 +147,11 @@ def extrair_bigramas(teores, vocab):
     return(features)
 
 def calc_matriz_sim(vetores, dir_experimento):
-    print("calculando matriz de similaridade nos vetores tfidf")
+    print("calculando matriz de similaridade entre os documentos")
     return cosine_similarity(vetores)
 
 def calcular_sim_assuntos(assuntos, sim_docs, dir_experimento):
-    print('calculando a similaridade entre assuntos para o modelo tfidf')
+    print('calculando a similaridade entre assuntos')
     lista_sim_assuntos = []
     lista_assuntos = assuntos.unique()
     
@@ -174,7 +174,7 @@ def calcular_sim_assuntos(assuntos, sim_docs, dir_experimento):
             lista_sim_assuntos.append((assunto_a, assunto_b, sim))
     lista_sim_assuntos = pd.DataFrame.from_records(lista_sim_assuntos, columns = ['assunto_a', 'assunto_b', 'sim_cos'])
     pivot = lista_sim_assuntos.pivot(index='assunto_a', columns='assunto_b', values='sim_cos')
-    pivot.to_csv(dir_experimento+'/sim_assuntos_tfidf.csv')
+    pivot.to_csv(dir_experimento+'/sim_assuntos_hashing.csv')
     plt.cla()
 
 #retorna dataframe com duas colunas contendo, respectivamente, ids e assunto dos documento
