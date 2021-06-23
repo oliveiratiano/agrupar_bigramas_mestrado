@@ -16,9 +16,13 @@ import zipfile
 import requests
 from sklearn.feature_extraction.text import HashingVectorizer
 import dask.dataframe as dd
-import multiprocessing
 from dask.diagnostics import ProgressBar
 from sklearn.metrics.pairwise import cosine_similarity
+
+def agrupar_bigramas_hash(freq_min: int, usar_ica: bool, usar_tesauro: bool, n_partitions: int):
+    for i in np.arange(1,6):
+        rodar_bigramas(freq_min, usar_ica, usar_tesauro, i, n_partitions)
+
 
 def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, n_partitions: int):
     lista_k = np.arange(2, 201)
