@@ -1,0 +1,10 @@
+scikit-learn
+gensim==3.8.3
+nltk
+matplotlib
+tqdm
+numpy
+pandas
+requests
+seaborn
+python-Levenshtein
