@@ -33,6 +33,7 @@ def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, 
     pbar = ProgressBar()
     pbar.register()
     nltk.download('stopwords')
+    nltk.download('rslp')
     erro = False
     warnings.filterwarnings("ignore")
     if not os.path.exists('dados'):
