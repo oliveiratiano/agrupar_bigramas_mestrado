@@ -19,16 +19,14 @@ import dask.dataframe as dd
 from dask.diagnostics import ProgressBar
 from sklearn.metrics.pairwise import cosine_similarity
 
+
 def agrupar_bigramas_hash():
     freq_min = int(sys.argv[1])
     usar_ica = sys.argv[2] == '--true'
     usar_tesauro = sys.argv[3] == '--true'
     n_partitions = (int(sys.argv[4]))
-
-
     for i in np.arange(1,6):
         rodar_bigramas(freq_min, usar_ica, usar_tesauro, i, n_partitions)
-
 
 def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, n_partitions: int):
     lista_k = np.arange(2, 201)
@@ -390,3 +388,6 @@ def download_file_from_google_drive(id, destination, file_size):
                 if chunk:
                     pbar.update(CHUNK_SIZE)
                     f.write(chunk)
+
+if __name__ == "__main__":
+    agrupar_bigramas_hash()
