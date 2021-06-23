@@ -1,6 +1,6 @@
 scikit-learn
 gensim==3.8.3
-nltk
+nltk==3.6.2
 matplotlib
 tqdm==4.59.0
 numpy
