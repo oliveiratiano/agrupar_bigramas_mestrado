@@ -4,7 +4,7 @@ import numpy as np
 import traceback
 import nltk 
 import pandas as pd
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.preprocessing import LabelEncoder
 from nltk.stem import RSLPStemmer
@@ -30,7 +30,6 @@ def agrupar_bigramas_hash():
 
 def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, n_partitions: int):
     lista_k = np.arange(2, 201)
-    tqdm.pandas()
     pbar = ProgressBar()
     pbar.register()
     nltk.download('stopwords')
