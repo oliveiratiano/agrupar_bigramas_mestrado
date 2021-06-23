@@ -2,7 +2,7 @@ scikit-learn
 gensim==3.8.3
 nltk
 matplotlib
-tqdm
+tqdm==4.59.0
 numpy
 pandas
 requests
