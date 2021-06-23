@@ -8,3 +8,4 @@ pandas
 requests
 seaborn
 python-Levenshtein
+dask
