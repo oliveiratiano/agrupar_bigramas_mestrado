@@ -113,7 +113,7 @@ def rodar_bigramas(freq_min: int, usar_ica: bool, usar_tesauro: bool, rnd: int, 
         y_kmeans = le.transform(y_kmeans)
         lista_scores_k = computar_scores_agrupamento(X_kmeans, y_kmeans, dir_experimento, lista_k)
         #gerar_graficos_kmeans(lista_scores_k, dir_experimento, modelo)
-        np.save('resultados/' + dir_experimento + '/' + 'hashing_lista_scores_k.npy', lista_scores_k)
+        np.save(dir_experimento + '/' + 'hashing_lista_scores_k.npy', lista_scores_k)
         print('******   dados de agrupamento do modelo hashing salvos.')
 
         #####MATRIZES DE SIMILARIDADE##############
